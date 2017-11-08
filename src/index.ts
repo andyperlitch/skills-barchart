@@ -9,7 +9,7 @@ class SkillsBarChart {
   private _inner: d3.Selection<any, any, any, any>;
   private _lineHeight: number = 45;
   private _labelWidth: number = 75;
-  private _animDuration: number = 1000;
+  private _animDuration: number = 1700;
   private _guidesGrp: d3.Selection<any, any, any, any>;
   private _scale = d3.scaleLinear().domain([0, 100]);
   

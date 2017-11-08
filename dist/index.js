@@ -3,7 +3,7 @@ var SkillsBarChart = (function () {
         this._margin = { left: 10, right: 10, top: 10, bottom: 30 };
         this._lineHeight = 45;
         this._labelWidth = 75;
-        this._animDuration = 1000;
+        this._animDuration = 1700;
         this._scale = d3.scaleLinear().domain([0, 100]);
         if (options.data) {
             this.data(options.data);

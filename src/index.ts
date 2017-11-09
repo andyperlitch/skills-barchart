@@ -18,7 +18,7 @@ class SkillsBarChart {
     { label: 'Expert', value: 100, anchor: 'end' }
   ];
   
-  constructor(options?: ISkillsBarChartOptions) {
+  constructor(options: ISkillsBarChartOptions = {}) {
 
     if (options.data) {
       this.data(options.data);
@@ -256,7 +256,7 @@ interface ISkillEntry<T = string> {
 };
 
 interface ISkillsBarChartOptions {
-  data: ICategoryData[];
+  data?: ICategoryData[];
   target?: any;
   lineHeight?: number;
 }

@@ -1,0 +1,231 @@
+[
+   {
+      "name": "Languages",
+      "color": "#1F7AFF",
+      "entries": [
+         {
+            "name": "JavaScript",
+            "score": 100,
+            "types": [
+               "FE",
+               "BE"
+            ]
+         },
+         {
+            "name": "HTML",
+            "score": 100,
+            "types": [
+               "FE"
+            ]
+         },
+         {
+            "name": "CSS",
+            "score": 100,
+            "types": [
+               "FE"
+            ]
+         },
+         {
+            "name": "SQL",
+            "score": 75,
+            "types": [
+               "DB"
+            ]
+         },
+         {
+            "name": "PHP",
+            "score": 69,
+            "types": [
+               "BE"
+            ]
+         },
+         {
+            "name": "Bash",
+            "score": 50,
+            "types": [
+               "BE"
+            ]
+         },
+         {
+            "name": "Java",
+            "score": 40,
+            "types": [
+               "BE"
+            ]
+         },
+         {
+            "name": "Python",
+            "score": 28,
+            "types": [
+               "BE"
+            ]
+         },
+         {
+            "name": "C#",
+            "score": 25,
+            "types": [
+               "BE"
+            ]
+         }
+      ]
+   },
+   {
+      "name": "Frameworks & Libraries",
+      "color": "#02C14F",
+      "entries": [
+         {
+            "name": "d3.js",
+            "score": 100,
+            "types": [
+               "FE"
+            ]
+         },
+         {
+            "name": "TypeScript",
+            "score": 100,
+            "types": [
+               "FE"
+            ]
+         },
+         {
+            "name": "AngularJS",
+            "score": 100,
+            "types": [
+               "FE"
+            ]
+         },
+         {
+            "name": "jQuery",
+            "score": 100,
+            "types": [
+               "FE"
+            ]
+         },
+         {
+            "name": "Bootstrap",
+            "score": 100,
+            "types": [
+               "FE"
+            ]
+         },
+         {
+            "name": "ExpressJS",
+            "score": 95,
+            "types": [
+               "BE"
+            ]
+         },
+         {
+            "name": "Backbone.js",
+            "score": 80,
+            "types": [
+               "FE"
+            ]
+         },
+         {
+            "name": "Angular2+",
+            "score": 80,
+            "types": [
+               "FE"
+            ]
+         },
+         {
+            "name": "Foundation",
+            "score": 35,
+            "types": [
+               "FE"
+            ]
+         },
+         {
+            "name": "Spring",
+            "score": 25,
+            "types": [
+               "BE"
+            ]
+         },
+         {
+            "name": "React.js",
+            "score": 20,
+            "types": [
+               "FE"
+            ]
+         }
+      ]
+   },
+   {
+      "name": "Tools & Programs",
+      "color": "#e56c0b",
+      "entries": [
+         {
+            "name": "Photoshop",
+            "score": 100,
+            "types": [
+               "Graphics"
+            ]
+         },
+         {
+            "name": "Illustrator",
+            "score": 100,
+            "types": [
+               "Graphics"
+            ]
+         },
+         {
+            "name": "Git",
+            "score": 100,
+            "types": [
+               "VCS"
+            ]
+         },
+         {
+            "name": "Sublime Text",
+            "score": 90,
+            "types": [
+               "IDE"
+            ]
+         },
+         {
+            "name": "JIRA",
+            "score": 90,
+            "types": [
+               "PM"
+            ]
+         },
+         {
+            "name": "VSCode",
+            "score": 80,
+            "types": [
+               "IDE"
+            ]
+         },
+         {
+            "name": "Jenkins",
+            "score": 50,
+            "types": [
+               "CI"
+            ]
+         },
+         {
+            "name": "Travis",
+            "score": 40,
+            "types": [
+               "CI"
+            ]
+         },
+         {
+            "name": "Intellij",
+            "score": 33,
+            "types": [
+               "IDE"
+            ]
+         },
+         {
+            "name": "Blender 3D",
+            "score": 33,
+            "types": [
+               "Graphics"
+            ]
+         }
+      ]
+   }
+]

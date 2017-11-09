@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>skills-barchart: global usage</title>
+    <link rel="stylesheet" href="/demo/demo.css">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="/dist/skills-barchart.js"></script>
+    
+  </head>
+  <body>
+    <h1>Global Usage</h1>
+    <div id="target"></div>
+    <script>
+    
+      // Get the data
+      d3.json('/demo/data.json', function(data) {
+        
+        new SkillsBarChart()
+          .target('#target')
+          .data(data)
+          .render();
+
+      });
+    
+    </script>
+  </body>
+</html>
+

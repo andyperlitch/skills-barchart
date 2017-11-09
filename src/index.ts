@@ -3,15 +3,20 @@
 class SkillsBarChart {
   
   private _data: ICategoryData[];
-  private _margin = { left: 10, right: 10, top: 10, bottom: 30 };
+  private _margin = { left: 30, right: 30, top: 30, bottom: 30 };
   private _el: d3.Selection<any, any, any, any>;
   private _svg: d3.Selection<any, any, any, any>;
   private _inner: d3.Selection<any, any, any, any>;
-  private _lineHeight: number = 45;
-  private _labelWidth: number = 75;
+  private _lineHeight: number = 30;
   private _animDuration: number = 1700;
   private _guidesGrp: d3.Selection<any, any, any, any>;
   private _scale = d3.scaleLinear().domain([0, 100]);
+  private _guideData: IGuideData[] = [
+    { label: 'Novice', value: 0, anchor: 'start' },
+    { label: 'Proficient', value: 33, anchor: 'middle' },
+    { label: 'Advanced', value: 66, anchor: 'middle' },
+    { label: 'Expert', value: 100, anchor: 'end' }
+  ];
   
   constructor(options?: ISkillsBarChartOptions) {
 
@@ -44,11 +49,11 @@ class SkillsBarChart {
       .append('g')
       .classed('skills-barchart-inner', true)
       .attr('transform', `translate(${this._margin.left}, ${this._margin.top})`);
-    
 
-    this._guidesGrp = svg
+    this._guidesGrp = inner
       .append('g')
       .classed('skills-barchart-guides', true);
+    
     return this;
   }
 
@@ -57,13 +62,12 @@ class SkillsBarChart {
     let lines = 0;
     let lastYOffset = 0;
     this._data.forEach(c => {
-      // one for the category name
-      lines++;
       // one for each category entry
       lines += c.entries.length;
       // set the y-offset for this and the next category
       c.yOffset = lastYOffset;
-      lastYOffset = lastYOffset + (c.entries.length + 1) * this._lineHeight;
+      c.height = c.entries.length * this._lineHeight;
+      lastYOffset = lastYOffset + c.height;
     });
     let height = lines * this._lineHeight;
     let width = 600;
@@ -71,7 +75,7 @@ class SkillsBarChart {
 
     // Update the scale's range
     let scale = this._scale;
-    scale.range([0, innerWidth - this._labelWidth]);
+    scale.range([0, innerWidth]);
 
     // References to svg and inner <g> (called ctx)
     let svg = this._svg;
@@ -84,38 +88,99 @@ class SkillsBarChart {
     .attr('height', height + this._margin.top + this._margin.bottom)
     .attr('width', width);
 
+    this._guidesGrp
+      .attr('transform', `translate(0, -10)`);
 
-    // JOIN (skill categories)
+    // JOIN (guides)
+    let guide = this._guidesGrp.selectAll('g.skill-level-guide')
+      .data(this._guideData, (g: IGuideData) => g.label);
+    
+    // EXIT (guides)
+    guide.exit().remove();
+
+    // ENTER (guides)
+    let newGuide = guide.enter()
+      .append('g')
+      .classed('skill-level-guide', true)
+      .attr('transform', g => `translate(${scale(g.value)}, 0)`);
+    newGuide
+      .append('text')
+      .classed('skill-level-guide-label', true)
+      .attr('text-anchor', g => g.anchor)
+      .attr('fill', '#CCC')
+      .attr('dy', '-0.4em')
+      .text(g => g.label);
+    newGuide
+      .append('line')
+      .classed('skill-level-guide-line', true)
+      .attr('stroke', '#CCC')
+      .attr('x1', 0)
+      .attr('y1', 0)
+      .attr('x2', 0)
+      .attr('y2', 0)
+
+    // MERGE (guides)
+    guide = newGuide.merge(guide);
+
+    // ENTER+UPDATE (guides)
+    guide
+      .select('line.skill-level-guide-line')
+      .transition()
+      .duration(this._animDuration)
+      .attr('y2', height)
+
+    // JOIN (categories)
     let category = ctx.selectAll('g.skill-category')
       .data(this._data, (d: ICategoryData) => d.name);
+
+    // EXIT (categories)
+    category.exit()
+      .transition()
+      .duration(this._animDuration)
+      .style('opacity', 0)
+      .remove();
     
-    // ENTER (skill categories)
+    // ENTER (categories)
     let newCategory = category.enter()
       .append('g')
       .classed('skill-category', true)
       .attr('transform', 'translate(0,0)'); // start at zero
+
+    // add category background
+    newCategory
+      .append('rect')
+      .classed('skill-category-title-bg', true)
+      .attr('fill', '#DEDEDE')
+      .attr('x', innerWidth + 3)
+      .attr('y', 0)
+      .attr('width', this._lineHeight - 3)
+      .attr('height', c => c.height - 5);
 
     // add the category title
     newCategory
       .append('text')
       .classed('skill-category-title', true)
       .style('font-size', '120%')
-      .attr('dy', '1em')
+      .attr('dx', '0.4em')
+      .attr('dy', '-0.6em')
       .text(c => c.name)
-      .attr('text-anchor', 'middle')
-      .attr('transform', `translate(${innerWidth / 2}, 0)`)
+      .attr('transform', c => `translate(${innerWidth}, 0) rotate(90)`);
 
-    // MERGE (skill categories)
+    // MERGE (categories)
     category = newCategory
       .merge(category);
-    
 
-    // ENTER+UPDATE (skill categories)
+    // ENTER+UPDATE (categories)
     category
       .transition()
       .duration(this._animDuration)
       .attr('transform', (c: ICategoryData) => `translate(0, ${c.yOffset})`);
     
+    // ENTER+UPDATE (skill category title backgrounds)
+    category
+      .select('rect.skill-category-title-bg')
+      .attr('x', innerWidth + 3)
+      .attr('height', c => c.height - 5);
 
     // JOIN (skills)
     let skill = category
@@ -125,29 +190,36 @@ class SkillsBarChart {
     // ENTER (skills)
     let newSkill = skill.enter()
       .append('g')
-      .classed('skill-group', true)
-      .attr('transform', `translate(${this._labelWidth},0)`);
-
-    // add skill name
-    newSkill
-      .append('text')
-      .classed('skill-name', true)
-      .text(s => s.name)
-      .attr('transform', 'translate(-5,0)')
-      .attr('dy', '1em')
-      .attr('text-anchor', 'end');
+      .classed('skill-group', true);
+    
+    // EXIT (skills)
+    skill.exit()
+      .transition()
+      .duration(this._animDuration)
+      .style('opacity', 0)
+      .remove();
     
     // add skill level
     newSkill
       .append('rect')
       .classed('skill-level', true)
       .attr('width', 0)
-      .attr('height', 20)
+      .attr('height', 25)
+      .style('opacity', 0.8)
       .attr('fill', function() {
         let cat: ICategoryData = d3.select((this as any).parentNode.parentNode).datum() as ICategoryData;
         return cat.color;
       });
 
+    // add skill name
+    newSkill
+      .append('text')
+      .classed('skill-name', true)
+      .text(s => s.name)
+      .attr('transform', 'translate(5,0)')
+      .attr('font-size', 16)
+      .attr('fill', 'white')
+      .attr('dy', '1em');
 
     // MERGE (skills)
     skill = newSkill
@@ -157,7 +229,7 @@ class SkillsBarChart {
     skill
       .transition()
       .duration(this._animDuration)
-      .attr('transform', (d, i) => `translate(${this._labelWidth}, ${(i + 1) * this._lineHeight})`);
+      .attr('transform', (d, i) => `translate(0, ${i * this._lineHeight})`);
       
     skill.select('rect.skill-level')
       .transition()
@@ -173,6 +245,7 @@ interface ICategoryData<T = string> {
   name: string;
   color: string;
   yOffset?: number; // added by this library
+  height?: number; // added by this library
   entries: ISkillEntry<T>[]
 }
 
@@ -186,4 +259,10 @@ interface ISkillsBarChartOptions {
   data: ICategoryData[];
   target?: any;
   lineHeight?: number;
+}
+
+interface IGuideData {
+  label: string;
+  value: number;
+  anchor: 'start' | 'middle' | 'end';
 }

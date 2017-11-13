@@ -3,12 +3,13 @@
 class SkillsBarChart {
   
   private _data: ICategoryData[];
-  private _margin = { left: 30, right: 30, top: 30, bottom: 30 };
+  private _margin = { left: 5, right: 30, top: 30, bottom: 30 };
   private _el: d3.Selection<any, any, any, any>;
   private _svg: d3.Selection<any, any, any, any>;
   private _inner: d3.Selection<any, any, any, any>;
   private _lineHeight: number = 30;
-  private _animDuration: number = 1700;
+  private _minCategoryHeight: number = 150;
+  private _animDuration: number = 1400;
   private _guidesGrp: d3.Selection<any, any, any, any>;
   private _scale = d3.scaleLinear().domain([0, 100]);
   private _guideData: IGuideData[] = [
@@ -61,15 +62,16 @@ class SkillsBarChart {
     // determine new height needed
     let lines = 0;
     let lastYOffset = 0;
+    let height = 0;
     this._data.forEach(c => {
       // one for each category entry
       lines += c.entries.length;
       // set the y-offset for this and the next category
       c.yOffset = lastYOffset;
-      c.height = c.entries.length * this._lineHeight;
+      c.height = Math.max(this._minCategoryHeight, c.entries.length * this._lineHeight);
+      height += c.height;
       lastYOffset = lastYOffset + c.height;
     });
-    let height = lines * this._lineHeight;
     let width = 600;
     let innerWidth = width - this._margin.left - this._margin.right;
 
@@ -144,7 +146,7 @@ class SkillsBarChart {
     let newCategory = category.enter()
       .append('g')
       .classed('skill-category', true)
-      .attr('transform', 'translate(0,0)'); // start at zero
+      .attr('transform', c => `translate(0,${c.yOffset})`); // start at zero
 
     // add category background
     newCategory
@@ -190,7 +192,8 @@ class SkillsBarChart {
     // ENTER (skills)
     let newSkill = skill.enter()
       .append('g')
-      .classed('skill-group', true);
+      .classed('skill-group', true)
+      .attr('transform', (d, i) => `translate(0, ${i * this._lineHeight})`);
     
     // EXIT (skills)
     skill.exit()

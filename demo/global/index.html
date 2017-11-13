@@ -2,26 +2,89 @@
 <html>
   <head>
     <title>skills-barchart: global usage</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
     <link rel="stylesheet" href="/demo/demo.css">
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="/dist/skills-barchart.js"></script>
     
   </head>
   <body>
-    <h1>Global Usage</h1>
-    <div id="target"></div>
+    <div class="container">
+      <h1>Global Usage</h1>
+      <div class="controls">
+        <label class="custom-control custom-radio">
+          <input id="radio1" name="skillTypes" type="radio" value="ALL" checked="checked" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">All</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input id="radio2" name="skillTypes" type="radio" value="FE" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Front-End</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input id="radio2" name="skillTypes" type="radio" value="BE" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Back-End</span>
+        </label>
+      </div>
+      <div id="target"></div>
+    </div>
     <script>
+
+      var chart = new SkillsBarChart();
+      var origData;
+      var skillTypesControl = document.querySelectorAll('input[type=radio][name="skillTypes"]');
+
+      chart
+        .target('#target')
     
       // Get the data
       d3.json('/demo/data.json', function(data) {
-        
-        new SkillsBarChart()
-          .target('#target')
-          .data(data)
-          .render();
-
+        origData = data;
+        updateChart();
       });
-    
+
+      skillTypesControl.forEach(function(c) {
+        c.addEventListener('change', function() {
+          updateChart();
+        });
+      });
+
+      function updateChart() {
+
+        var data = origData.map(function(category) {
+          return Object.assign({}, category);
+        });
+
+        for (const ctrl of skillTypesControl) {
+          if (ctrl.checked) {
+            switch (ctrl.value) {
+              case 'ALL':
+                chart
+                  .data(data)
+                  .render();
+              break;
+              default:
+                data = data.filter(function(d) {
+                  d.entries = d.entries.filter(function(entry) {
+                    return entry.types.some(function(type) {
+                      return type === ctrl.value;
+                    });
+                  });
+                  return d.entries.length > 0;
+                });
+                chart
+                  .data(data)
+                  .render();
+              break;
+
+            }
+          }
+        }
+      }
+
     </script>
   </body>
 </html>

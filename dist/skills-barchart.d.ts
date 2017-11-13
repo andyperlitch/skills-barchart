@@ -5,6 +5,7 @@ declare class SkillsBarChart {
     private _svg;
     private _inner;
     private _lineHeight;
+    private _minCategoryHeight;
     private _animDuration;
     private _guidesGrp;
     private _scale;
@@ -27,7 +28,7 @@ interface ISkillEntry<T = string> {
     types?: T[];
 }
 interface ISkillsBarChartOptions {
-    data: ICategoryData[];
+    data?: ICategoryData[];
     target?: any;
     lineHeight?: number;
 }

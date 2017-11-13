@@ -2,12 +2,13 @@
   "name": "skills-barchart",
   "version": "1.0.0",
   "description": "A horizontal bar chart for visualizing skills in different categories, where the x-axis is novice-proficient-advanced-expert. Good for interactive resumes!",
-  "main": "src/index.js",
+  "main": "dist/skills-barchart.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "demo": "live-server"
+    "demo": "live-server",
+    "build": "tsc && node build.js && rm dist/index.js && mv dist/index.d.ts dist/skills-barchart.d.ts"
   },
-  "types": "./dist/index.d.ts",
+  "types": "./dist/skills-barchart.d.ts",
   "author": "Andy Perlitch (github.com/andyperlitch)",
   "license": "MIT",
   "dependencies": {
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@types/d3": "^4.11.0",
+    "fmd2": "^0.1.1",
     "live-server": "^1.2.0",
     "typescript": "^2.6.1"
   }

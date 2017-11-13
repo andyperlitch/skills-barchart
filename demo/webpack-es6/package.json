@@ -1,0 +1,29 @@
+{
+  "name": "skills-barchart-webpack-es6-demo",
+  "version": "0.0.0",
+  "description": "Demo usage of skills-barchart in a webpack/es6 environment&#39;",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andy Perlitch <>",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "babel-core": "^6.7.7",
+    "babel-loader": "^6.2.4",
+    "colors": "^1.1.0",
+    "css-loader": "^0.23.1",
+    "csswring": "^4.2.2",
+    "doiuse": "^2.3.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "postcss-cssnext": "^2.5.2",
+    "postcss-loader": "^0.8.2",
+    "postcss-nested": "^1.0.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.8.11",
+    "webpack-dev-server": "^1.8.2",
+    "wordwrap": "1.0.0"
+  }
+}

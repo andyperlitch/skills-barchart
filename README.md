@@ -74,12 +74,15 @@ Running the Demo
 Building the Project
 --------------------
 
-To build the dist files:
+To build the dist files, first ensure that you have done step 2 of "Running the Demo" above.
+
+Then run:
 
 ```
 npm run build
 ```
 
+This creates `dist/skills-barchart.js` and `dist/skills-barchart.d.ts`.
 
 
 License

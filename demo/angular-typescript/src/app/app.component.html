@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>Angular/Typescript Usage</h1>
+  <div class="controls">
+    <label class="custom-control custom-radio">
+      <input id="radio1" name="skillTypes" type="radio" [(ngModel)]="skillTypeChoice" value="ALL" checked="checked" class="custom-control-input">
+      <span class="custom-control-indicator"></span>
+      <span class="custom-control-description">All</span>
+    </label>
+    <label class="custom-control custom-radio">
+      <input id="radio2" name="skillTypes" type="radio" [(ngModel)]="skillTypeChoice" value="FE" class="custom-control-input">
+      <span class="custom-control-indicator"></span>
+      <span class="custom-control-description">Front-End</span>
+    </label>
+    <label class="custom-control custom-radio">
+      <input id="radio2" name="skillTypes" type="radio" [(ngModel)]="skillTypeChoice" value="BE" class="custom-control-input">
+      <span class="custom-control-indicator"></span>
+      <span class="custom-control-description">Back-End</span>
+    </label>
+  </div>
+  <skills-barchart *ngIf="data" [data]="data" [filterByType]="skillTypeChoice"></skills-barchart>
+</div>

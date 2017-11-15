@@ -13,7 +13,7 @@ Usage
 Install with npm:
 
 ```bash
-npm i skills-barchart
+npm install skills-barchart
 ```
 
 
@@ -68,7 +68,7 @@ Running the Demo
     - http://127.0.0.1:8080/demo/global/
     - http://127.0.0.1:8080/demo/browserify/
     - http://127.0.0.1:8080/demo/webpack-es6/
-    - http://127.0.0.1:8080/demo/webpack-ts/
+    - http://127.0.0.1:8080/demo/angular-typescript/
 
 
 Building the Project
